@@ -1,3 +1,5 @@
+#encoding: utf-8
+#!/usr/local/bin/python3
 import time
 import threading
 from pynput.mouse import Button, Controller
@@ -18,7 +20,7 @@ delay = 90
 print("Instrucciones\n presione - para iniciar repeticion\n \
 	presione . para cambiar el delay general\n \
 	presione , para cerrar el programa")
-class ClickMouse(threading.Thread):
+class ClickMouse(threading.thread):
 	def __init__(self, delay):
 		super(ClickMouse, self).__init__()
 		self.delay = delay
@@ -26,14 +28,18 @@ class ClickMouse(threading.Thread):
 		self.program_running = True
 		self.posicion1 = posicion1
 		self.posicion2 = posicion2
+	
 	def cambiaDelay(self, delay):
 		self.delay = delay
+	
 	def stop_clicking(self):
 		print("*clicking music stop*")
 		self.running = False
+	
 	def start_clicking(self):
 		print("*clicking intensifies*")
 		self.running = True
+	
 	def exit(self):
 		print("*clicking band has been killed*")
 		self.stop_clicking()

@@ -32,4 +32,4 @@ por defecto hace click izquierdo
 hay mas metodos pero los parametros de este permiten hacer todo
 """
 input("introduzca esta")
-print(pyautogui.locateOnScreen('/home/anubarak/CodigoFuente/ProyectosPython/imgPilotoAutomatico/borrar.png'))
+print(pyautogui.locateOnScreen('/home/anubarak/codigoFuente/ProyectosPython/imgPilotoAutomatico/borrar.png'))

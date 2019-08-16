@@ -20,6 +20,7 @@ delay = 90
 print("Instrucciones\n presione - para iniciar repeticion\n \
 	presione . para cambiar el delay general\n \
 	presione , para cerrar el programa")
+	
 class ClickMouse(threading.thread):
 	def __init__(self, delay):
 		super(ClickMouse, self).__init__()

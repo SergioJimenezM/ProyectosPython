@@ -25,10 +25,10 @@ class persona():
 		
 	def setEdad(self, edad):
 		try:
-			edad = int(edad)
+			edad = int(edad) #intenta convertir el contenido de edad a un tipo numerico
 		except:#captura cualquier error
 			print("La edad debe ser numerica")
-		self.__edad = edad
+		self.__edad = edad #pasa la edad de el objeto temporal al atributo global __edad
 		
 	def getEdad(self):
 		return self.__edad

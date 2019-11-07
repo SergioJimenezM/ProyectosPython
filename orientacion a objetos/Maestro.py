@@ -7,8 +7,8 @@ class maestro(Persona):
 	__materiaQueImparte = ""
 	
 	def __init__(self, nombre, apellido, edad, materia):
-		self.__persona = Persona(nombre, apellido, edad)
-		self.setMateria(materia)
+		self.__persona = Persona(nombre, apellido, edad) #se guarda un objeto del tipo persona en la variable global __persona
+		self.setMateria(materia) #se añade la materia que es atributo de un maestro
 		
 	def setMateria(self, materia):
 		self.__materiaQueImparte = materia

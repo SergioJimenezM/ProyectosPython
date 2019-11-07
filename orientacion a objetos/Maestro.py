@@ -15,3 +15,7 @@ class maestro(Persona):
 	
 	def getMateria(self):
 		return self.__materiaQueImparte
+		
+	def mostrarDatos(self):
+		self.__persona.mostrarDatos()
+		print("Imparte la materia", self.getMateria() )

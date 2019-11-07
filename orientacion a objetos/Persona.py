@@ -32,3 +32,6 @@ class persona():
 		
 	def getEdad(self):
 		return self.__edad
+		
+	def mostrarDatos(self):
+		print("La persona se llama", self.getNombre(), "su apellido es", self.getApellido(), "su edad es", self.getEdad())

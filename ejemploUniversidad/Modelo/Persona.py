@@ -11,9 +11,13 @@ class Persona():
 	#No accesar a datos directamente, aunque sea legal
 	#Los casos especiales no son lo suficientemente especiales como para romper las reglas
 	
-	def __init__(self):
-		pass#creacion sin argumentos
-	def __init__(self, dni, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaDeNacimiento):
+	def __init__(self, dni = None, primerNombre = None, segundoNombre = None, primerApellido = None, segundoApellido = None, fechaDeNacimiento = None):
+		if(dni != None):
+			self.cargarDatos(dni, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaDeNacimiento)
+		else:
+			pass
+		
+	def cargarDatos(self, dni, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaDeNacimiento):
 		self.setDNI(dni)
 		self.setPrimerNombre(primerNombre) 
 		self.setSegundoNombre(segundoNombre)
@@ -39,7 +43,7 @@ class Persona():
 	def setSegundoNombre(self, segundoNombre):
 		self.SegundoNombre = segundoNombre
 	
-	def getPrimerApellido():
+	def getPrimerApellido(self):
 		return self.PrimerApellido
 	
 	def setPrimerApellido(self, primerApellido):
@@ -52,7 +56,6 @@ class Persona():
 		self.SegundoApellido = segundoApellido
 	
 	def getFechaDeNacimiento(self):
-		print(type(self.FechaDeNacimiento))
 		return self.FechaDeNacimiento
 	
 	def setFechaDeNacimiento(self, fechaDeNacimiento):
@@ -65,4 +68,5 @@ class Persona():
 			self.FechaDeNacimiento = fechaDeNacimiento
 	
 if __name__=='__main__':
+	laPersona = Persona()
 	print("No se espera que este codigo sea ejecutado sin su contexto")

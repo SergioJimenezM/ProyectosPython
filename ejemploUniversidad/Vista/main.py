@@ -2,7 +2,7 @@
 
 import sys
 from PySide2.QtWidgets import(QApplication, QMainWindow, QFrame, QPlainTextEdit,
-QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QLabel, QDateEdit)
+QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QLabel, QDateEdit, QMessageBox)
 
 from datetime import date
 #se sube un nivel en el arbol de archivos para importar el contenido de
@@ -95,6 +95,8 @@ class VentanaAdministradorDePersonas(QFrame):
 		self.btnVolverAlMenu.clicked.connect(self.volverAlMenu)
 		layoutDerecha.addWidget(self.btnVolverAlMenu)
 		
+		
+		
 		#Cosas de Izquierda
 		layoutIzquierda = QVBoxLayout()#ordena cosas de arriba a abajo
 		
@@ -156,34 +158,49 @@ class VentanaAdministradorDePersonas(QFrame):
 		self.limpiarErrores()
 		try:
 			laPersona = Persona(int(''.join(self.DNI.text())), ''.join(self.PrimerNombre.text()), ''.join(self.SegundoNombre.text()), ''.join(self.PrimerApellido.text()), ''.join(self.SegundoApellido.text()), ''.join(self.fechaDeNacimiento.text()))
-			self.mostrarError.insertPlainText(''.join(self.operacionesConPersonas.insertarPersona(laPersona)))
+			salida = self.operacionesConPersonas.insertarPersona(laPersona)
+			self.mostrarError.insertPlainText(str(salida))
 			self.limpiarCampos()#habilitamos la edicion y evitamos dejar datos basura
 		except Exception as e:
 			self.mostrarError.insertPlainText(''.join(e.args))
 		pass
 	def buscarPersona(self):
+		self.laPersona = Persona()
 		self.limpiarErrores()
 		try:
-			laPersona = self.operacionesConPersonas.buscarPersonaPorDNI(int(''.join(self.DNI.text())))
-			if(type(laPersona) == type(str)):
-				self.mostrarError.insertPlainText(''.join(laPersona))
-			self.llenarCampos(laPersona)
+			self.laPersona = self.operacionesConPersonas.buscarPersonaPorDNI(int(''.join(self.DNI.text())))
+			if type(self.laPersona) == type(""):
+				self.mostrarError.insertPlainText(''.join(self.laPersona))
+				return None
+			self.llenarCampos(self.laPersona)
 		except Exception as e:
 			self.mostrarError.insertPlainText(''.join(e.args))
 				
 		
 		pass
 	def eliminarPersona(self):
-		self.mostrarError.insertPlainText("No implementado")
-		pass
+		self.limpiarErrores()
+		try:
+			mensajeDeConfirmacion = "DNI: "+self.DNI.text()
+			opcionElegida = QMessageBox.question(self, "Desea eliminar a la persona?", mensajeDeConfirmacion, QMessageBox.Yes, QMessageBox.No)
+			if opcionElegida == QMessageBox.Yes:
+				respuesta = self.operacionesConPersonas.eliminarPersona(self.laPersona)
+				self.mostrarError.insertPlainText(''.join(respuesta))
+				self.limpiarCampos()
+		except Exception as e:
+			self.mostrarError.insertPlainText(''.join(e.args))
+		
 	def actualizarPersona(self):
-		self.mostrarError.insertPlainText("No implementado")
-		pass
+		self.limpiarErrores()
+		try:
+			return "no hay nada"
+		except Exception as e:
+			self.mostrarError.insertPlainText(''.join(e.args))
 		
 	def llenarCampos(self, laPersona):
-		print(PrimerNombre)
 		self.limpiarCampos()
 		self.DNI.setText(str(laPersona.getDNI()))
+		self.DNI.setReadOnly(True)
 		self.PrimerNombre.setText(laPersona.getPrimerNombre())
 		self.SegundoNombre.setText(laPersona.getSegundoNombre())
 		self.PrimerApellido.setText(laPersona.getPrimerApellido())
@@ -192,6 +209,7 @@ class VentanaAdministradorDePersonas(QFrame):
 		
 	def limpiarCampos(self):
 		self.DNI.clear()
+		self.DNI.setReadOnly(False)
 		self.PrimerNombre.clear()
 		self.SegundoNombre.clear()
 		self.PrimerApellido.clear()

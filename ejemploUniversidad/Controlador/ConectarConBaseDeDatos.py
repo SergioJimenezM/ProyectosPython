@@ -26,8 +26,4 @@ class ConectarConBaseDeDatos():
 
 
 if __name__== '__main__':
-	con = ConectarConBaseDeDatos()
-	conexion = con.conectar()
-	cursor = conexion.cursor()
-	print(cursor)
-	cursor.close()#Siempre hay que cerrar las conexiones
+	print("No se espera que este codigo sea ejecutado sin su contexto")

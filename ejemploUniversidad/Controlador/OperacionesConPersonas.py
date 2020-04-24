@@ -8,21 +8,20 @@ from Controlador.ConectarConBaseDeDatos import ConectarConBaseDeDatos
 
 class OperacionesConPersonas():
 	
-	def insertarPersona(self, persona):
+	def insertarPersona(self, laPersona):
 		instancia = ConectarConBaseDeDatos()
 		conexion = instancia.conectar()
 		cursor = conexion.cursor()
 		filas = 0
 		sql = "insert into Personas values (%s, %s, %s, %s, %s, %s)" 
 		try:
-			filas = cursor.execute(sql, (persona.getDNI(), persona.getPrimerNombre(), 
-			persona.getSegundoNombre(), persona.getPrimerApellido(), persona.getSegundoApellido(), persona.getFechaDeNacimiento(),))
+			filas = cursor.execute(sql, (laPersona.getDNI(), laPersona.getPrimerNombre(), laPersona.getSegundoNombre(), laPersona.getPrimerApellido(), laPersona.getSegundoApellido(), laPersona.getFechaDeNacimiento(),))
 			conexion.commit()
 			conexion.close()
 		except Exception as e:
 			conexion.rollback()
 			conexion.close()
-			return "Ha ocurrido un error ", e.args#Los errores nunca deben pasar silenciosamente
+			return "Ha ocurrido un error "+e.args#Los errores nunca deben pasar silenciosamente
 		if filas == 0:
 			return "No se han insertado registros"
 		else:
@@ -39,7 +38,7 @@ class OperacionesConPersonas():
 			conexion.close()
 		except Exception as e:
 			conexion.close()
-			return "Ha ocurrido un error ", e.args
+			return "Ha ocurrido un error "+e.args
 		if(filas == 0):
 			return "No hay registros"
 		registro = cursor.fetchone()#Sacar uno
@@ -57,7 +56,7 @@ class OperacionesConPersonas():
 			conexion.close()
 		except Exception as e:
 			conexion.close()
-			return "Ha ocurrido un error ", e.args
+			return "Ha ocurrido un error "+e.args
 			
 		if filas == 0:
 			return "No hay registros"
@@ -79,7 +78,7 @@ class OperacionesConPersonas():
 		except Exception as e:
 			conexion.rollback()
 			conexion.close()
-			return "Ha ocurrido un error ", e.args
+			return "Ha ocurrido un error "+e.args
 		if filas == 0:
 			return "No se ha podido eliminar"
 		else:
@@ -92,18 +91,17 @@ class OperacionesConPersonas():
 		filas = 0
 		sql = "update Personas set PrimerNombre = %s, SegundoNombre = %s, PrimerApellido = %s, SegundoApellido = %s, FechaDeNacimiento = %s where DNI = %s"
 		try:
-			filas = cursor.execute(sql, (laPersona.getPrimerNombre(), laPersona.getSegundoNombre(), 
-			laPersona.getPrimerApellido(), laPersona.getSegundoApellido(), laPersona.getFechaDeNacimiento(), str(laPersona.getDNI())))
+			filas = cursor.execute(sql, (laPersona.getPrimerNombre(), laPersona.getSegundoNombre(), laPersona.getPrimerApellido(), laPersona.getSegundoApellido(), laPersona.getFechaDeNacimiento(), str(laPersona.getDNI())))
 			conexion.commit()
 			conexion.close()
 		except Exception as e:
 			conexion.rollback()
 			conexion.close()
-			return "Ha ocurrido un error ", e.args
+			return "Ha ocurrido un error "+e.args
 		if filas == 0:
 			return "No se ha podido actualizar"
 		else:
-			return "Se han borrado "+str(filas)+" registro(s)"
+			return "Se ha actualizado "+str(filas)+" registro(s)"
 			
 		pass
 		

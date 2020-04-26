@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 import sys
 from datetime import date
 sys.path.append("../")
@@ -102,9 +102,6 @@ class OperacionesConPersonas():
 			return "No se ha podido actualizar"
 		else:
 			return "Se ha actualizado "+str(filas)+" registro(s)"
-			
-		pass
 		
 if __name__=='__main__':
 	print("No se espera que este codigo sea ejecutado sin su contexto")
-	

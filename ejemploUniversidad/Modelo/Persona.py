@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!usr/bin/python3
+
 from datetime import date
 
 class Persona():
@@ -11,13 +12,7 @@ class Persona():
 	#No accesar a datos directamente, aunque sea legal
 	#Los casos especiales no son lo suficientemente especiales como para romper las reglas
 	
-	def __init__(self, dni = None, primerNombre = None, segundoNombre = None, primerApellido = None, segundoApellido = None, fechaDeNacimiento = None):
-		if(dni != None):
-			self.cargarDatos(dni, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaDeNacimiento)
-		else:
-			pass
-		
-	def cargarDatos(self, dni, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaDeNacimiento):
+	def __init__(self, dni, primerNombre, segundoNombre = None, primerApellido, segundoApellido, fechaDeNacimiento):
 		self.setDNI(dni)
 		self.setPrimerNombre(primerNombre) 
 		self.setSegundoNombre(segundoNombre)

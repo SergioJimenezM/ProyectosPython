@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 
 import pymysql as mariadb
 
@@ -22,8 +22,6 @@ class ConectarConBaseDeDatos():
 		except Exception as e:
 			print("Ha ocurrido un error\n", e)
 		return conexion
-		
-
 
 if __name__== '__main__':
 	print("No se espera que este codigo sea ejecutado sin su contexto")

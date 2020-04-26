@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 
 import sys
 from PySide2.QtWidgets import(QApplication, QMainWindow, QFrame, QPlainTextEdit,
@@ -174,9 +174,7 @@ class VentanaAdministradorDePersonas(QFrame):
 			self.llenarCampos(laPersona)
 		except Exception as e:
 			self.mostrarError.insertPlainText(''.join(e.args))
-				
 		
-		pass
 	def eliminarPersona(self):
 		self.limpiarErrores()
 		try:
@@ -189,14 +187,12 @@ class VentanaAdministradorDePersonas(QFrame):
 					self.mostrarError.insertPlainText(''.join(respuesta))
 					self.limpiarCampos()
 					return None
-				
 		except Exception as e:
 			self.mostrarError.insertPlainText(''.join(e.args))
 		
 	def actualizarPersona(self):
 		self.limpiarErrores()
 		try:
-			
 			laPersona = self.llenarPersona()
 			mensajeDeConfirmacion = "DNI: "+self.DNI.text()
 			opcionElegida = QMessageBox.question(self, "Desea eliminar a la persona?", mensajeDeConfirmacion, QMessageBox.Yes, QMessageBox.No)
@@ -230,17 +226,14 @@ class VentanaAdministradorDePersonas(QFrame):
 		self.PrimerApellido.clear()
 		self.SegundoApellido.clear()
 		self.fechaDeNacimiento.setDate(date.today())
-		
 		#limpiar campos de texto y permitir la edicion de todos ellos
-		pass
+
 	def limpiarErrores(self):
 		self.mostrarError.clear()
 		
 	def volverAlMenu(self):
-		
 		raiz.setCentralWidget(None)
 		raiz.setCentralWidget(VentanaPrincipal())
-
 
 if __name__=='__main__':
 	app = QApplication(sys.argv)

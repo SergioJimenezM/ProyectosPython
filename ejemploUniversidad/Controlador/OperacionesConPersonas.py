@@ -10,17 +10,14 @@ class OperacionesConPersonas():
 	
 	def insertarPersona(self, laPersona):
 		instancia = ConectarConBaseDeDatos()
-		conexion = instancia.conectar()
-		cursor = conexion.cursor()
+		cursor = instancia.obtenerCursor()
 		filas = 0
 		sql = "insert into Personas values (%s, %s, %s, %s, %s, %s)" 
 		try:
 			filas = cursor.execute(sql, (laPersona.getDNI(), laPersona.getPrimerNombre(), laPersona.getSegundoNombre(), laPersona.getPrimerApellido(), laPersona.getSegundoApellido(), laPersona.getFechaDeNacimiento(),))
-			conexion.commit()
-			conexion.close()
+			instancia.confirmarSentencia()
 		except Exception as e:
-			conexion.rollback()
-			conexion.close()
+			instancia.revertirSentencia()
 			return "Ha ocurrido un error "+e.args#Los errores nunca deben pasar silenciosamente
 		if filas == 0:
 			return "No se han insertado registros"
@@ -29,15 +26,14 @@ class OperacionesConPersonas():
 	
 	def buscarPersonaPorDNI(self, dni):
 		instancia = ConectarConBaseDeDatos()
-		conexion = instancia.conectar()
-		cursor = conexion.cursor()
+		cursor = instancia.obtenerCursor()
 		filas = 0
 		sql = "select * from Personas where DNI = %s;"
 		try:
 			filas = cursor.execute(sql, (dni,))#esto evita que realice inyección de codigo sql
-			conexion.close()
+			instancia.confirmarSentencia()
 		except Exception as e:
-			conexion.close()
+			instancia.revertirSentencia()
 			return "Ha ocurrido un error "+e.args
 		if(filas == 0):
 			return "No hay registros"
@@ -47,15 +43,14 @@ class OperacionesConPersonas():
 		
 	def listarPersonas(self):#Se lista por nombres o apellidos
 		instancia = ConectarConBaseDeDatos()
-		conexion = instancia.conectar()
-		cursor = conexion.cursor()
+		cursor = instancia.obtenerCursor()
 		filas = 0
 		sql = "SELECT * FROM Personas;"
 		try:
 			filas = cursor.execute(sql)
-			conexion.close()
+			instancia.confirmarSentencia()
 		except Exception as e:
-			conexion.close()
+			instancia.revertirSentencia()
 			return "Ha ocurrido un error "+e.args
 			
 		if filas == 0:
@@ -67,17 +62,14 @@ class OperacionesConPersonas():
 		
 	def eliminarPersona(self, laPersona):
 		instancia = ConectarConBaseDeDatos()
-		conexion = instancia.conectar()
-		cursor = conexion.cursor()
+		cursor = instancia.obtenerCursor()
 		filas = 0
 		sql = "delete from Personas where DNI = %s"
 		try:
 			filas = cursor.execute(sql, laPersona.getDNI())
-			conexion.commit()
-			conexion.close()
+			instancia.confirmarSentencia()
 		except Exception as e:
-			conexion.rollback()
-			conexion.close()
+			instancia.revertirSentencia()
 			return "Ha ocurrido un error "+e.args
 		if filas == 0:
 			return "No se ha podido eliminar"
@@ -86,17 +78,14 @@ class OperacionesConPersonas():
 	
 	def actualizarPersona(self, laPersona):
 		instancia = ConectarConBaseDeDatos()
-		conexion = instancia.conectar()
-		cursor = conexion.cursor()
+		cursor = instancia.obtenerCursor()
 		filas = 0
 		sql = "update Personas set PrimerNombre = %s, SegundoNombre = %s, PrimerApellido = %s, SegundoApellido = %s, FechaDeNacimiento = %s where DNI = %s"
 		try:
 			filas = cursor.execute(sql, (laPersona.getPrimerNombre(), laPersona.getSegundoNombre(), laPersona.getPrimerApellido(), laPersona.getSegundoApellido(), laPersona.getFechaDeNacimiento(), str(laPersona.getDNI())))
-			conexion.commit()
-			conexion.close()
+			instancia.confirmarSentencia()
 		except Exception as e:
-			conexion.rollback()
-			conexion.close()
+			instancia.revertirSentencia()
 			return "Ha ocurrido un error "+e.args
 		if filas == 0:
 			return "No se ha podido actualizar"

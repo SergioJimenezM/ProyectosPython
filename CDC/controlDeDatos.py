@@ -28,7 +28,7 @@ class controlDeDatos:
     #para aplicar el esquema automaticamente hace falta borrar la DB antigua
     #no hay que hacerlo a menos que sea nececesario y siempre luego de recuperar datos
 
-    def conexion(self, datos = 0, sentencia = 0):
+    def conexion(self):
         conn = sqlite3.connect(self.nombreDB)
         return conn
 
@@ -44,7 +44,7 @@ class controlDeDatos:
             lista.append(laPersona)
         return lista
 
-    def listarDispositivos():
+    def listarDispositivos(self):
         pass
 
     def agregarPersona(self, laPersona):
@@ -65,13 +65,13 @@ class controlDeDatos:
     def buscarPersona(self):
         pass
 
-    def buscarDispositivo():
+    def buscarDispositivo(self):
         pass
 
-    def modificarPersona():
+    def modificarPersona(self):
         pass
 
-    def modificarDispositivo():
+    def modificarDispositivo(self):
         pass
 
 

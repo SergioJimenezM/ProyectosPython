@@ -6,6 +6,7 @@ create table persona(
 create table dispositivo(
     telefono text not null,
     descripcion text not null,
+    fechaDeIngreso date not null,
     fechaDeEntrega date not null,
     vencimientoDeGarantia date not null, 
     foreign key (telefono) references persona(telefono)

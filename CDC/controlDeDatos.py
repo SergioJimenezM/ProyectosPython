@@ -42,16 +42,23 @@ class controlDeDatos:
         for nombre, telefono in cursor.fetchall():
             laPersona = Persona(nombre, telefono)
             lista.append(laPersona)
+        con.close()
         return lista
 
-    def listarDispositivos(self):
-        pass
+    def listarDispositivos(self, laPersona):
+        con = self.conexion()
+        consulta = "select * from dispositivo where telefono = ?"
+        cursor = con.cursor()
+        cursor.execute(consulta, (laPersona.getTelefono(),))
+        dispositivos = cursor.fetchall()
+        con.close()
+        return dispositivos
 
     def agregarPersona(self, laPersona):
         con = self.conexion()
         consulta = "insert into persona(nombre, telefono) values(?,?);"
         cursor = con.cursor()
-        cursor.execute(consulta, (laPersona.nombre, laPersona.telefono,))
+        cursor.execute(consulta, (laPersona.getNombre(), laPersona.getTelefono(),))
         afectadas = cursor.rowcount
         con.commit()
         con.close()
@@ -59,8 +66,13 @@ class controlDeDatos:
 
     def agregarDispositivo(self, dispositivo):
         con = self.conexion()
-        consulta = "insert into dispositivo(telefono, descripcion, fechaDeEntrega, VencimientoDeGarantia) values(?,?,?,?)"
-        pass
+        consulta = "insert into dispositivo(telefono, descripcion, fechaDeIngreso, fechaDeEntrega, vencimientoDeGarantia) values(?,?,?,?,?)"
+        cursor = con.cursor()
+        cursor.execute(consulta, (dispositivo.getTelefono(), dispositivo.getDescripcion(), dispositivo.getFechaDeIngreso(), dispositivo.getFechaDeEntrega(), dispositivo.getVencimientoDeGarantia(),))
+        afectadas = cursor.rowcount
+        con.commit()
+        con.close()
+        return afectadas
 
     def buscarPersona(self):
         pass
@@ -81,8 +93,15 @@ if __name__ == '__main__':
     p1 = Persona("Andrey", "1")
     p2 = Persona("Sergio","2")
     
-    print("columnas afectadas", control.agregarPersona(p1))
-    print("columnas afectadas", control.agregarPersona(p2))
+    #print("columnas afectadas", control.agregarPersona(p1))
+    #print("columnas afectadas", control.agregarPersona(p2))
+
+    #d1 = Dispositivo(telefono="1",descripcion= "aifron negro pantalla quebrada", fechaDeIngreso="2023/06/21", fechaDeEntrega="2023/07/21", vencimientoDeGarantia="2023/10/21")
+    #print("columnas afectadas", control.agregarDispositivo(d1))
+    #p1.setDispositivos(d1)
 
     for i in control.listarPersonas():
         print("Nombre:", i.nombre, "Telefono:", i.telefono)
+
+    for i in control.listarDispositivos(p1):
+        print("Telefono:", i.telefono, "Descripcion", i.descripcion)

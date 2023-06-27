@@ -37,7 +37,6 @@ class controlDeDatos:
         consulta = "select * from persona"
         cursor = con.cursor()
         cursor.execute(consulta)
-        print("Filas afectadas",cursor.rowcount)
         lista = []
         for nombre, telefono in cursor.fetchall():
             laPersona = Persona(nombre, telefono)
@@ -50,9 +49,13 @@ class controlDeDatos:
         consulta = "select * from dispositivo where telefono = ?"
         cursor = con.cursor()
         cursor.execute(consulta, (laPersona.getTelefono(),))
-        dispositivos = cursor.fetchall()
+        tupla = cursor.fetchall()
+        lista = []
+        for telefono, descripcion, fechaDeIngreso, fechaDeEntrega, vencimientoDeGarantia in tupla:
+            elDispositivo = Dispositivo(telefono, descripcion, fechaDeIngreso, fechaDeEntrega, vencimientoDeGarantia)
+            lista.append(elDispositivo)
         con.close()
-        return dispositivos
+        return lista
 
     def agregarPersona(self, laPersona):
         con = self.conexion()
@@ -74,16 +77,31 @@ class controlDeDatos:
         con.close()
         return afectadas
 
-    def buscarPersona(self):
-        pass
+    def buscarPersona(self, telefono = "", nombre = ""):
+        con = self.conexion()
+        lista = []
+        if telefono:
+            consulta = "select * from persona where telefono = ?"
+            print("busca por telefono")
+            pass
+        if nombre:
+            consulta = "select * from persona where nombre like ?"
+            cursor = con.cursor()
+            nombre ='%'+nombre+'%'
+            cursor.execute(consulta, (nombre,))
+            for nombre, telefono in cursor.fetchall():
+                laPersona = Persona(nombre, telefono)
+                lista.append(laPersona)
+        con.close()
+        return lista
 
     def buscarDispositivo(self):
         pass
 
-    def modificarPersona(self):
+    def modificarPersona(self, laPersona):
         pass
 
-    def modificarDispositivo(self):
+    def modificarDispositivo(self, elDispositivo):
         pass
 
 
@@ -104,4 +122,8 @@ if __name__ == '__main__':
         print("Nombre:", i.nombre, "Telefono:", i.telefono)
 
     for i in control.listarDispositivos(p1):
-        print("Telefono:", i.telefono, "Descripcion", i.descripcion)
+        print("Telefono:", i.getTelefono(), "Descripcion", i.getDescripcion())
+
+    for i in control.buscarPersona(nombre = "ser"):
+        print("Nombre:", i.nombre, "Telefono:", i.telefono)
+    

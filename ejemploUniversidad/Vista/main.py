@@ -1,7 +1,7 @@
 #!usr/bin/python3
 
 import sys
-from PySide2.QtWidgets import(QApplication, QMainWindow, QFrame, QPlainTextEdit,
+from PySide6.QtWidgets import(QApplication, QMainWindow, QFrame, QPlainTextEdit,
 QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QLabel, QDateEdit, QMessageBox)
 
 from datetime import date

@@ -82,9 +82,12 @@ class controlDeDatos:
         lista = []
         if telefono:
             consulta = "select * from persona where telefono = ?"
-            print("busca por telefono")
-            pass
-        if nombre:
+            cursor = con.cursor()
+            cursor.execute(consulta, (telefono,))
+            for nombre, telefono in cursor.fetchall():
+                laPersona = Persona(nombre, telefono)
+                lista.append(laPersona)
+        elif nombre:
             consulta = "select * from persona where nombre like ?"
             cursor = con.cursor()
             nombre ='%'+nombre+'%'
@@ -95,16 +98,66 @@ class controlDeDatos:
         con.close()
         return lista
 
-    def buscarDispositivo(self):
-        pass
+    def modificarPersona(self, laPersona, nombreAnterior):
+        #No vamos a modificar el nombre por que es un problema 
+        # y si habían dispositivos asociados al telefono
+        # directamente va a fallar el cambio, tendrías que eliminar
+        # los dispositivos asociados primero
+        con = self.conexion()
+        consulta = "update persona set telefono=? where nombre = ?"
+        cursor = con.cursor()
+        cursor.execute(consulta, (laPersona.telefono, nombreAnterior))
+        if(cursor.rowcount == 1):
+            con.commit()
+            con.close()
+            return "Todos los cambios realizados"
+        else:
+            return "No se han podido realizar los cambios, el nombre es ambiguo y genera mas de un cambio"
 
-    def modificarPersona(self, laPersona):
-        pass
 
     def modificarDispositivo(self, elDispositivo):
-        pass
+        #No podemos modificar el telefono por que es un PK
+        con = self.conexion()
+        consulta = "update dispositivo set descripcion=?, fechaDeIngreso=?, fechaDeEntrega=?, vencimientoDeGarantia=? where telefono=?"
+        cursor = con.cursor()
+        cursor.execute(consulta, (elDispositivo.descripcion, elDispositivo.fechaDeIngreso, elDispositivo.fechaDeEntrega, elDispositivo.vencimientoDeGarantia, elDispositivo.telefono))
+        if(cursor.rowcount == 1):
+            con.commit()
+            con.close()
+            return "Todos los cambios realizados"
+        else:
+            con.rollback()
+            con.close()
+            return "No se han podido realizar los cambios, el telefono es ambiguo y genera mas de un cambio"
+        
+    def eliminarPersona(self, laPersona):
+        con = self.conexion()
+        consulta = "delete from persona where nombre=?"
+        cursor = con.cursor()
+        cursor.execute(consulta, (laPersona.nombre,))
+        if(cursor.rowcount == 1):
+            con.commit()
+            con.close()
+            return "Persona eliminada"
+        else:
+            con.rollback()
+            con.close()
+            return "No se han podido realizar los cambios, se eliminaría mas de una persona"
 
-
+    def eliminarDispositivo(self, elDispositivo):
+        con = self.conexion()
+        consulta = "delete from dispositivo where telefono=?"
+        cursor = con.cursor()
+        cursor.execute(consulta, (elDispositivo.telefono,))
+        if(cursor.rowcount == 1):
+            con.commit()
+            con.close()
+            return "Dispositivo eliminado"
+        else:
+            con.rollback()
+            con.close()
+            return "No se han podido realizar los cambios, se eliminaría mas de un dispositivo"
+        
 if __name__ == '__main__':
     control = controlDeDatos()
     

@@ -11,7 +11,6 @@ from dispositivo import Dispositivo
 from persona import Persona
 
 raiz = None
-mostrarError = None
 con = controlDeDatos()
 laPersona = None
 
@@ -96,9 +95,9 @@ class ventanaPrincipal(QDialog):
 
         #layout inferior
         layoutInferior = QVBoxLayout()
-        mostrarError = QPlainTextEdit()
-        mostrarError.setReadOnly(True)
-        layoutInferior.addWidget(mostrarError)
+        self.mostrarError = QPlainTextEdit()
+        self.mostrarError.setReadOnly(True)
+        layoutInferior.addWidget(self.mostrarError)
 
         #Ordenar los layout
         layoutHorizontal.addLayout(layoutIzquierda)
@@ -111,6 +110,8 @@ class ventanaPrincipal(QDialog):
         self.adjustSize()
 
     def agregarPersona(self):
+        laPersona = Persona(self.txtNombre.text(), self.txtTelefono.text())
+        self.mostrarError.setPlainText(con.agregarDispositivo(laPersona))
         pass
     
     def buscarPersona(self):
@@ -121,6 +122,12 @@ class ventanaPrincipal(QDialog):
 
     def listarDispositivos(self):
         pass
+
+    def limpiar(self):
+        self.txtNombre.setText("")
+        self.txtTelefono.setText("")
+        self.txtDescripcion.setText("")
+
     
 
 if __name__=='__main__':

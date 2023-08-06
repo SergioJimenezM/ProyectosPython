@@ -65,7 +65,7 @@ class controlDeDatos:
         afectadas = cursor.rowcount
         con.commit()
         con.close()
-        return afectadas
+        return "Se ha afectado "+afectadas+" fila"
 
     def agregarDispositivo(self, dispositivo):
         con = self.conexion()

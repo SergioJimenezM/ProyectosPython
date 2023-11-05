@@ -82,16 +82,20 @@ class ventanaPrincipal(QDialog):
         layoutDerecha = QVBoxLayout()
 
         self.btnAgregarPersona = QPushButton("Agregar Persona")
-        self.btnAgregarPersona.clicked.connect(self.agregarPersona())
+        self.btnAgregarPersona.clicked.connect(self.agregarPersona)
         layoutDerecha.addWidget(self.btnAgregarPersona)
 
         self.btnBuscarPersona = QPushButton("Buscar Persona")
-        self.btnBuscarPersona.clicked.connect(self.buscarPersona())
+        self.btnBuscarPersona.clicked.connect(self.buscarPersona)
         layoutDerecha.addWidget(self.btnBuscarPersona)
 
         self.btnListarPersonas = QPushButton("Listar personas")
-        self.btnListarPersonas.clicked.connect(self.listarPersonas())
+        self.btnListarPersonas.clicked.connect(self.listarPersonas)
         layoutDerecha.addWidget(self.btnListarPersonas)
+
+        self.btnLimpiar = QPushButton("Limpiar")
+        self.btnLimpiar.clicked.connect(self.limpiar)
+        layoutDerecha.addWidget(self.btnLimpiar)
 
         #layout inferior
         layoutInferior = QVBoxLayout()
@@ -110,25 +114,40 @@ class ventanaPrincipal(QDialog):
         self.adjustSize()
 
     def agregarPersona(self):
+        print("esto no debería tocarse solo")
         laPersona = Persona(self.txtNombre.text(), self.txtTelefono.text())
-        self.mostrarError.setPlainText(con.agregarDispositivo(laPersona))
-        pass
+        string = con.agregarPersona(laPersona)
+        self.limpiar()
     
     def buscarPersona(self):
-        pass
+        telefono = self.txtNombre.text()
+        nombre = self.txtTelefono.text()
 
+        if(not nombre and not telefono):
+            self.mostrarError.setPlainText("Debe ingresar un nombre o telefono")
+        elif(not nombre):
+            self.mostrarError.setPlainText("Nombre")
+        elif(not telefono):
+            self.mostrarError.setPlainText("Telefono")
+        
     def listarPersonas(self):
         pass
 
     def listarDispositivos(self):
         pass
 
+    def llenarObjeto(self, laPersona):
+        pass
+
+    def vaciarObjeto(self):
+        
+        pass
+    
     def limpiar(self):
         self.txtNombre.setText("")
         self.txtTelefono.setText("")
         self.txtDescripcion.setText("")
-
-    
+        self.mostrarError.setPlainText("")
 
 if __name__=='__main__':
     app = QApplication(sys.argv)

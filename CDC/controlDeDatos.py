@@ -65,7 +65,7 @@ class controlDeDatos:
         afectadas = cursor.rowcount
         con.commit()
         con.close()
-        return "Se ha afectado "+afectadas+" fila"
+        return "Se ha afectado ",afectadas," fila"
 
     def agregarDispositivo(self, dispositivo):
         con = self.conexion()
@@ -159,10 +159,11 @@ class controlDeDatos:
             return "No se han podido realizar los cambios, se eliminaría mas de un dispositivo"
         
 if __name__ == '__main__':
-    control = controlDeDatos()
+    print("Pruebas en blanco")
+    #control = controlDeDatos()
     
-    p1 = Persona("Andrey", "1")
-    p2 = Persona("Sergio","2")
+    #p1 = Persona("Andrey", "1")
+    #p2 = Persona("Sergio","2")
     
     #print("columnas afectadas", control.agregarPersona(p1))
     #print("columnas afectadas", control.agregarPersona(p2))
@@ -171,12 +172,12 @@ if __name__ == '__main__':
     #print("columnas afectadas", control.agregarDispositivo(d1))
     #p1.setDispositivos(d1)
 
-    for i in control.listarPersonas():
-        print("Nombre:", i.nombre, "Telefono:", i.telefono)
+    #for i in control.listarPersonas():
+    #    print("Nombre:", i.nombre, "Telefono:", i.telefono)
 
-    for i in control.listarDispositivos(p1):
-        print("Telefono:", i.getTelefono(), "Descripcion", i.getDescripcion())
+    #for i in control.listarDispositivos(p1):
+    #    print("Telefono:", i.getTelefono(), "Descripcion", i.getDescripcion())
 
-    for i in control.buscarPersona(nombre = "ser"):
-        print("Nombre:", i.nombre, "Telefono:", i.telefono)
+    #for i in control.buscarPersona(nombre = "ser"):
+    #    print("Nombre:", i.nombre, "Telefono:", i.telefono)
     

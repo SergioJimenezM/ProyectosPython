@@ -3,7 +3,7 @@
 
 #Importando las clases de interfaz
 import sys
-from PySide2.QtWidgets import (QApplication, QMainWindow, QDialog, QLineEdit, 
+from PySide6.QtWidgets import (QApplication, QMainWindow, QDialog, QLineEdit, 
 								QPushButton, QVBoxLayout, QLabel)
 
 #Clases propias
